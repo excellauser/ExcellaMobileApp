@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Results;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace ExcellaMobileApp.Controllers
 {
@@ -31,15 +32,13 @@ namespace ExcellaMobileApp.Controllers
         // POST: api/Metro
 
       //  [BindJson(typeof(Criteria), "json")]
-        public async Task<HttpResponseMessage> Post(Criteria json)
+        public async Task<RootObject> Post(Criteria json)
         {
 
             var client = new HttpClient();
             var queryString = HttpUtility.ParseQueryString(string.Empty);
 
-            // Request headers
-            client.DefaultRequestHeaders.Add("api_key", "d247804d4a6e48b4aeb5c81a44aa9821");
-
+     
             // Request parameters
             queryString["Lat"] = json.Latitude;
             queryString["Lon"] = json.Longitude;
@@ -47,14 +46,16 @@ namespace ExcellaMobileApp.Controllers
 
 
 
-            var uri = "https://api.wmata.com/Rail.svc/StationEntrances?Lat=" + json.Latitude + "&Lon=" + json.Longitude + "&radius=" + json.radius + "&api_key=d247804d4a6e48b4aeb5c81a44aa9821";
-           // var uri = "https://api.wmata.com/Rail.svc/StationEntrances&" + queryString;
+            var uri = "https://api.wmata.com/Rail.svc/json/jStationEntrances?Lat=" + json.Latitude + "&Lon=" + json.Longitude + "&radius=" + json.radius + "&api_key=d247804d4a6e48b4aeb5c81a44aa9821";
+           
+            var response = await client.GetStringAsync(uri);
 
-          
 
-            var response = await client.GetAsync(uri);
+            return JsonConvert.DeserializeObject<RootObject>(response); 
 
-            return Request.CreateResponse(HttpStatusCode.OK, response);
+
+
+            //return Request.CreateResponse(HttpStatusCode.OK, response);
 
 
 
