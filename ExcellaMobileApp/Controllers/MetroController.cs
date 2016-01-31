@@ -29,9 +29,7 @@ namespace ExcellaMobileApp.Controllers
             return "value";
         }
 
-        // POST: api/Metro
 
-      //  [BindJson(typeof(Criteria), "json")]
         public async Task<RootObject> Post(Criteria json)
         {
 
@@ -52,11 +50,6 @@ namespace ExcellaMobileApp.Controllers
 
 
             return JsonConvert.DeserializeObject<RootObject>(response); 
-
-
-
-            //return Request.CreateResponse(HttpStatusCode.OK, response);
-
 
 
 
