@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Runtime.Serialization;
+using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace ExcellaMobileApp.Models
 {
@@ -28,7 +30,8 @@ namespace ExcellaMobileApp.Models
         [DataMember]
         public double Lat { get; set; }
 
-        [DataMember(Name = "StationLongitude")]
+        [JsonProperty("StationLongitude")]
+        [DataMember(Name = "Lon")]
         public double Lon { get; set; }
     }
 
